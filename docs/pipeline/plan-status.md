@@ -3,7 +3,7 @@
 **Project ID:** omer-landing
 **Plan:** `docs/pipeline/plan.md`
 **Last updated:** 2026-03-30
-**Current Stage:** 2 (COMPLETE)
+**Current Stage:** 2
 **Total Stages:** 2
 
 ---
@@ -12,8 +12,8 @@
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
-| 2 | Lighthouse CI | DONE | `stage-2-lighthouse-ci` | Merged to main. PR #2. |
+| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged 2026-03-30 — PR #1 |
+| 2 | Lighthouse CI | DONE | `stage-2-lighthouse-ci` | Merged 2026-03-30 — PR #2 |
 
 ---
 
@@ -40,7 +40,7 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | PR #1 merged to main (already merged at handoff). `git pull --rebase origin main` confirmed up to date. |
+| 2026-03-30 | PR #1 merged via squash. Files merged: `index.html`, `style.css`, `favicon.svg`, `vercel.json`, `README.md`, `docs/qa/stage-1-review.md`. |
 
 ---
 
@@ -54,17 +54,17 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Stage 2 handed off to Kenny. Implements R-005, R-006 (Lighthouse thresholds). Prior QA summary: `docs/qa/prior-qa-summary-S2.md`. |
+| 2026-03-30 | Stage 2 handed off to Kenny. Branch: `stage-2-lighthouse-ci`. Implements CI gating for Success Metrics. |
 | 2026-03-30 | Kenny completed stage 2. PR: https://github.com/Omer-Palmidos/omer-landing/pull/2. All 7 AC verified. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Butters completed QA review. **Verdict: PASS**. All 7 acceptance criteria verified. AgentShield Grade A (0 findings). Automated test suite: 17/17 passed. Report: `docs/qa/stage-2-review.md`. |
+| 2026-03-30 | Butters completed QA review. **Verdict: PASS**. All 7 acceptance criteria verified. Report: `docs/qa/stage-2-review.md`. |
 
 ### Merge notes
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | PR #2 merged to main (squash). Branch `stage-2-lighthouse-ci` deleted. All 7 AC verified. Pipeline complete — all 2 stages DONE. |
+| 2026-03-30 | PR #2 merged via squash. Files merged: `.github/workflows/ci.yml`, `lighthouserc.json`. Pipeline complete — all 2 stages DONE. |
