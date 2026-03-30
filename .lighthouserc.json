@@ -1,0 +1,18 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["https://omer-landing-palmidos.vercel.app"],
+      "numberOfRuns": 3
+    },
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "performance": ["error", {"minScore": 0.95}],
+        "accessibility": ["error", {"minScore": 0.95}]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
