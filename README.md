@@ -1,8 +1,17 @@
 # omer-landing
 
-Tegridy Farms project — GitHub + Vercel + Neon. Pipeline specs live in docs/pipeline/ in this repo.
+Personalized landing page for Omer — built with plain HTML5 + CSS3. No framework, no build step, no npm packages.
 
-## Environments
+## Local Dev
 
-- **Vercel:** DATABASE_URL is set for production, preview, and development when Randy runs project-setup (encrypted).
-- **Local:** Copy .env.example to .env.local and paste your Neon connection string into DATABASE_URL.
+```
+npx serve .
+```
+
+Then open http://localhost:3000
+
+## Deployment
+
+Vercel auto-deploys on push to `main`. No build command needed — static files served directly.
+
+No environment variables required.
