@@ -1,0 +1,1 @@
+Omer Landing - A simple, beautiful landing page that says "Hello Omer, from Palmidos AI". This is a minimal web project to create an elegant, personalized landing page with clean design and smooth animations.
