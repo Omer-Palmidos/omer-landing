@@ -13,7 +13,7 @@
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
 | 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
-| 2 | Lighthouse CI | DONE | `stage-2-lighthouse-ci` | PR #2 open. All 7 AC verified. |
+| 2 | Lighthouse CI | QA_DONE | `stage-2-lighthouse-ci` | QA PASS — ready for merge |
 
 ---
 
@@ -48,7 +48,7 @@
 
 **Objective:** Add a GitHub Actions workflow that runs Lighthouse CI against the live Vercel deployment on every push to `main`, gating on Performance ≥ 95 and Accessibility ≥ 95.
 
-**Status:** IN_PROGRESS
+**Status:** DONE
 
 ### Development notes
 
@@ -61,7 +61,7 @@
 
 | Date       | Note |
 |------------|------|
-| —          | Pending dev completion. |
+| 2026-03-30 | Butters completed QA review. **Verdict: PASS**. All 7 acceptance criteria verified. AgentShield Grade A (0 findings). Automated test suite: 17/17 passed. Report: `docs/qa/stage-2-review.md`. |
 
 ### Merge notes
 
