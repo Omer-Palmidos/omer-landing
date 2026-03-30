@@ -3,7 +3,7 @@
 **Project ID:** omer-landing
 **Plan:** `docs/pipeline/plan.md`
 **Last updated:** 2026-03-30
-**Current Stage:** 1
+**Current Stage:** 2
 **Total Stages:** 2
 
 ---
@@ -12,8 +12,8 @@
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Complete Static Page | QA_DONE | `stage-1-static-page` | QA PASS — ready for merge |
-| 2 | Lighthouse CI | PENDING | — | Pending Stage 1 merge |
+| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged 2026-03-30 — PR #1 |
+| 2 | Lighthouse CI | IN_PROGRESS | `stage-2-lighthouse-ci` | Assigned to Kenny |
 
 ---
 
@@ -40,7 +40,7 @@
 
 | Date       | Note |
 |------------|------|
-| —          | Pending QA sign-off. |
+| 2026-03-30 | PR #1 merged via squash. `git pull` on `main` confirms fast-forward. Files merged: `index.html`, `style.css`, `favicon.svg`, `vercel.json`, `README.md`, `docs/qa/stage-1-review.md`. |
 
 ---
 
@@ -48,22 +48,22 @@
 
 **Objective:** Add a GitHub Actions workflow that runs Lighthouse CI against the live Vercel deployment on every push to `main`, gating on Performance ≥ 95 and Accessibility ≥ 95.
 
-**Status:** PENDING
+**Status:** IN_PROGRESS
 
 ### Development notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending Stage 1 merge. |
+| 2026-03-30 | Stage created. Handed off to Kenny. Branch: `stage-2-lighthouse-ci`. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending Stage 1 merge. |
+| —          | Pending. Assigned to Butters after dev completes. |
 
 ### Merge notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending Stage 1 merge. |
+| —          | Pending QA sign-off. |
