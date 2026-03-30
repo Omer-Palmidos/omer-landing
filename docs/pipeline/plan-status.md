@@ -12,8 +12,8 @@
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged 2026-03-30 — PR #1 |
-| 2 | Lighthouse CI | IN_PROGRESS | `stage-2-lighthouse-ci` | Assigned to Kenny |
+| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
+| 2 | Lighthouse CI | QA_DONE | `stage-2-lighthouse-ci` | QA PASS — ready for merge |
 
 ---
 
@@ -40,7 +40,7 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | PR #1 merged via squash. `git pull` on `main` confirms fast-forward. Files merged: `index.html`, `style.css`, `favicon.svg`, `vercel.json`, `README.md`, `docs/qa/stage-1-review.md`. |
+| 2026-03-30 | PR #1 merged to main (already merged at handoff). `git pull --rebase origin main` confirmed up to date. |
 
 ---
 
@@ -48,19 +48,20 @@
 
 **Objective:** Add a GitHub Actions workflow that runs Lighthouse CI against the live Vercel deployment on every push to `main`, gating on Performance ≥ 95 and Accessibility ≥ 95.
 
-**Status:** IN_PROGRESS
+**Status:** DONE
 
 ### Development notes
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Stage created. Handed off to Kenny. Branch: `stage-2-lighthouse-ci`. |
+| 2026-03-30 | Stage 2 handed off to Kenny. Implements R-005, R-006 (Lighthouse thresholds). Prior QA summary: `docs/qa/prior-qa-summary-S2.md`. |
+| 2026-03-30 | Kenny completed stage 2. PR: https://github.com/Omer-Palmidos/omer-landing/pull/2. All 7 AC verified. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending. Assigned to Butters after dev completes. |
+| 2026-03-30 | Butters completed QA review. **Verdict: PASS**. All 7 acceptance criteria verified. AgentShield Grade A (0 findings). Automated test suite: 17/17 passed. Report: `docs/qa/stage-2-review.md`. |
 
 ### Merge notes
 
