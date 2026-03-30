@@ -3,7 +3,7 @@
 **Project ID:** omer-landing
 **Plan:** `docs/pipeline/plan.md`
 **Last updated:** 2026-03-30
-**Current Stage:** 2
+**Current Stage:** 2 (COMPLETE)
 **Total Stages:** 2
 
 ---
@@ -13,7 +13,7 @@
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
 | 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
-| 2 | Lighthouse CI | QA_DONE | `stage-2-lighthouse-ci` | QA PASS — ready for merge |
+| 2 | Lighthouse CI | DONE | `stage-2-lighthouse-ci` | Merged to main. PR #2. |
 
 ---
 
@@ -67,4 +67,4 @@
 
 | Date       | Note |
 |------------|------|
-| —          | Pending QA sign-off. |
+| 2026-03-30 | PR #2 merged to main (squash). Branch `stage-2-lighthouse-ci` deleted. All 7 AC verified. Pipeline complete — all 2 stages DONE. |
