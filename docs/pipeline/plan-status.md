@@ -12,7 +12,7 @@
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Complete Static Page | IN_PROGRESS | `stage-1-static-page` | Assigned to Kenny |
+| 1 | Complete Static Page | QA_DONE | `stage-1-static-page` | QA PASS — ready for merge |
 | 2 | Lighthouse CI | PENDING | — | Pending Stage 1 merge |
 
 ---
@@ -34,7 +34,7 @@
 
 | Date       | Note |
 |------------|------|
-| —          | Pending dev completion. Butters to QA when Kenny marks done. |
+| 2026-03-30 | Butters completed QA review. **Verdict: PASS**. All 16 acceptance criteria verified. AgentShield Grade A (0 findings). Design QA PASS. Report: `docs/qa/stage-1-review.md`. |
 
 ### Merge notes
 
