@@ -4,75 +4,66 @@
 **Author:** Cartman (CTO)
 **Date:** 2026-03-30
 
-**Output path:** `docs/pipeline/plan.md` and `docs/pipeline/plan-status.md` in the app repo (committed to `main`).
+**Output path:** `docs/pipeline/plan.md`
 
 ---
 
 ## Project Size Assessment
 
-**Tier: Small**
+**Tier: Nano**
 
-**Reasoning:** This is a plain HTML/CSS static page with no build tooling, no backend, no framework, and no database. Total file count is ~6 (`index.html`, `style.css`, `favicon.svg`, `favicon.ico`, `vercel.json`, `README.md`) plus a CI workflow file. Single concern. Maximum 2–3 stages.
+**Reasoning:** This is a fully static single-page site with no backend, no build tooling, no framework, no database, and zero interactivity. Total deliverable: 3 files (`index.html`, `style.css`, `favicon.svg`) plus a CI workflow file (`.github/workflows/ci.yml`) and `vercel.json`. All content is hardcoded. No routing, no state, no API calls. This is a textbook Nano-tier project.
 
-**Stage count: 2** — within Small tier cap.
+**Max stages allowed: 2**
 
-**Stage 1 scaffolding note:** Per the Stage 1 Scaffolding Rule, this project has **no build tooling** (no `package.json`, no bundler). Therefore Stage 1 is the **first functional deliverable** — the working HTML/CSS page itself. There is nothing meaningful to scaffold separately.
+**Stage count: 2** — justified below. Stage 1 delivers the complete functional page (HTML + CSS + favicon + vercel.json). Stage 2 delivers the Lighthouse CI workflow. These two stages are separated because CI setup is independently testable (it either passes green or not) and has a distinct scope: it requires no code changes to the page itself, only a GitHub Actions workflow file. Collapsing them would mix "build the page" with "gate the page" in a single commit, making it harder to bisect failures. Both stages are worth their overhead.
 
 ---
 
-## Stage 1: Functional Landing Page
+## Stage 1: Complete Static Page
 
-**Objective:** Build and deploy the complete, polished "Hello Omer" landing page — markup, styling, animations, favicon, responsive design — as a fully working static site on Vercel.
+**Objective:** Build and deploy the full personalized landing page — centered greeting, entrance animation, responsive design, favicon, and Vercel static config — as a single working deliverable.
 
 **Implements:** R-001, R-002, R-003, R-004, R-005, R-006, R-007, R-008, R-009, R-010
 
 **Prerequisites:** None (first stage)
 
-**Architecture:**
-The project is plain HTML + CSS with zero JavaScript and no build tooling. Files deploy directly to Vercel as a static site. The existing `vercel.json` must be updated from `"framework": "nextjs"` to remove the `framework` key (or set `{}`), so Vercel serves the files as a plain static site without attempting a Next.js build. Repo: `tegridy-farms/omer-landing`. Vercel URL: `https://omer-landing-palmidos.vercel.app`.
+**Architecture context:**
+- Stack: plain HTML5 + CSS3. No framework, no build step, no `package.json`.
+- Files: `index.html` (markup + `<head>` metadata), `style.css` (layout, animation, breakpoints), `favicon.svg` (vector favicon), `vercel.json` (static deploy config — set `{}` or remove `"framework": "nextjs"` key so Vercel does not attempt a Next.js build).
+- Vercel serves static files directly; no build command needed.
+- No JavaScript files. No environment variables. No database.
+- `vercel.json` in repo root must not contain `"framework": "nextjs"`. Set to `{}` or `{ "framework": null }`.
 
-Directory structure per architecture spec:
-```
-omer-landing/
-  index.html          ← All markup, <title>, favicon refs
-  style.css           ← Layout, animation, responsive breakpoints
-  favicon.svg         ← SVG favicon (primary, vector)
-  favicon.ico         ← Fallback favicon (legacy browsers)
-  vercel.json         ← Update: remove "framework": "nextjs" key
-  README.md           ← Update with project description
-```
+**Design context (from design-bible.md):**
+- Dark background: `#0f0e0c` with radial amber glow `radial-gradient(ellipse 60% 40% at 50% 50%, #c9a96e18 0%, transparent 70%)`
+- "Hello Omer" — font `clamp(2.8rem, 8vw, 5.5rem)`, weight 300, color `#f0ede6` (16.2:1 contrast ✅)
+- "from Palmidos AI" — font `clamp(1rem, 2.8vw, 1.75rem)`, weight 300, color `#c9a96e` (7.1:1 contrast ✅), letter-spacing 0.04em
+- Typeface: Fraunces (Google Fonts, single `<link>`) with fallback `Georgia, "Times New Roman", serif`
+- Animation: `@keyframes greetingIn` — opacity 0→1, translateY 20px→0, duration 700ms, delay 200ms, easing `cubic-bezier(0.16, 1, 0.3, 1)`, fill-mode `both`
+- `@media (prefers-reduced-motion: reduce)` — cancel animation, set opacity 1, translateY 0 immediately
+- Centering: `body { display: flex; align-items: center; justify-content: center; min-height: 100dvh; }`
+- Mobile padding: `padding: 0 24px` on `.page` or `body`
+- 16px gap between greeting lines
 
-No `node_modules`, no `package.json`, no build step. `npx serve .` (without install) can be used for local preview.
+**Product context (from PRD + user-flows.md):**
+- Greeting text exact string: `"Hello Omer"` (h1) and `"from Palmidos AI"` (p)
+- `<title>Hello Omer</title>` required (R-007)
+- Favicon required — no 404 in network tab (R-008); use `favicon.svg` + `favicon.ico` fallback in `<head>`
+- Viewport meta tag: `width=device-width, initial-scale=1` (no `user-scalable=no`)
+- `lang="en"` on `<html>`
+- `<main>` landmark wrapping `.page` content; `<h1>` for main greeting
+- Animation must complete within 1.5s total (200ms delay + 700ms animation = 900ms ≤ 1.5s ✅)
+- No JavaScript, no analytics, no tracking, no database connection
 
-**Design:**
-Dark-mode aesthetic with warm near-black background (`#0f0e0c`). Typography uses **Fraunces** (Google Fonts, single `<link>`, `display=swap`) with Georgia/serif fallback. Two-part greeting:
-- `<h1 class="greeting__main">Hello Omer</h1>` — `#f0ede6`, `clamp(2.8rem, 8vw, 5.5rem)`, weight 300
-- `<p class="greeting__sub">from Palmidos AI</p>` — `#c9a96e` (amber-gold accent), `clamp(1rem, 2.8vw, 1.75rem)`, weight 300, `letter-spacing: 0.04em`
-
-Background: radial-gradient amber halo (`radial-gradient(ellipse 60% 40% at 50% 50%, #c9a96e18 0%, transparent 70%)`) layered over the solid background color.
-
-Entrance animation:
-```css
-@keyframes greetingIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.greeting--animate {
-  animation: greetingIn 700ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
-}
-@media (prefers-reduced-motion: reduce) {
-  .greeting--animate { animation: none; opacity: 1; transform: translateY(0); }
-}
-```
-
-CSS custom properties in `:root`:
+**CSS custom properties to define in `:root`:**
 ```css
 :root {
   --color-bg:      #0f0e0c;
   --color-primary: #f0ede6;
   --color-accent:  #c9a96e;
   --color-glow:    #c9a96e18;
-  --font-serif:    'Fraunces', Georgia, serif;
+  --font-serif:    'Fraunces', Georgia, 'Times New Roman', serif;
   --size-main:     clamp(2.8rem, 8vw, 5.5rem);
   --size-sub:      clamp(1rem, 2.8vw, 1.75rem);
   --space-gap:     16px;
@@ -80,99 +71,62 @@ CSS custom properties in `:root`:
 }
 ```
 
-Body centering using `min-height: 100dvh` (iOS Safari address bar safe):
-```css
-body {
-  margin: 0;
-  background-color: var(--color-bg);
-  background-image: radial-gradient(ellipse 60% 40% at 50% 50%, var(--color-glow) 0%, transparent 70%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100dvh;
-  padding: 0 var(--space-edge);
-  box-sizing: border-box;
-}
+**DOM structure (exact from design-bible.md):**
+```html
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Omer</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="page">
+      <div class="greeting greeting--animate">
+        <h1 class="greeting__main">Hello Omer</h1>
+        <p class="greeting__sub">from Palmidos AI</p>
+      </div>
+    </main>
+  </body>
+</html>
 ```
 
-**Product Note:**
-The page exists to deliver one moment of delight to Omer — "Hello Omer, from Palmidos AI" — centered, beautiful, and immediate. No interactivity. No forms. No links. No analytics. No database. The `<title>` must read "Hello Omer" (R-007). The favicon must be present and not 404 (R-008). Vercel URL must return HTTP 200 with the correct content (R-005).
-
 **Test strategy:** pragmatic
-
-*Justification: This is a pure presentational/static stage — no business logic, no API, no migrations. Acceptance criteria are verified visually and via simple HTTP checks, not unit tests. Lighthouse CI is a separate Stage 2 concern.*
+> This is a purely presentational static page with zero backend logic. All acceptance criteria are visual/structural and verified by manual QA + automated Lighthouse checks in Stage 2. No TDD or Jest required — tests follow implementation via browser/Lighthouse inspection.
 
 ### Files to Create/Modify
 
 | File Path | Action (create/modify) | Purpose |
 |-----------|----------------------|---------|
-| `index.html` | modify | Complete semantic markup: `<title>Hello Omer</title>`, Google Fonts link, favicon refs, centered `<main>` with `.greeting.greeting--animate`, `<h1>` + `<p>` |
-| `style.css` | create | CSS custom properties, body centering (flexbox + `100dvh`), typography, radial-gradient background, `@keyframes greetingIn`, responsive `clamp()`, `prefers-reduced-motion` override |
-| `favicon.svg` | create | SVG favicon — amber circle or "P" lettermark for Palmidos AI (minimal, scales well) |
-| `favicon.ico` | create | ICO fallback (16×16 or 32×32) for legacy browser compatibility |
-| `vercel.json` | modify | Remove `"framework": "nextjs"` key; replace with `{}` or static config so Vercel serves plain HTML |
-| `README.md` | modify | Brief project description: Omer Landing Page, Vercel URL, local preview instructions (`npx serve .`) |
+| `index.html` | create | Single HTML page — markup, `<head>` metadata, greeting structure (R-001, R-002, R-007, R-008) |
+| `style.css` | create | Layout (flexbox centering), animation (`@keyframes greetingIn`), responsive typography, color tokens, reduced-motion override (R-002, R-003, R-004, R-006, R-009, R-010) |
+| `favicon.svg` | create | SVG vector favicon — Palmidos AI minimal mark or letter-based glyph (R-008) |
+| `vercel.json` | modify | Remove/nullify `"framework": "nextjs"` so Vercel treats repo as static; set `{}` or `{ "framework": null }` |
+| `README.md` | modify | Document local dev (`npx serve .`), deployment (auto via Vercel on push to main), and note: no env vars required |
 
 ### Acceptance Criteria — Stage 1
 
-1. [ ] `index.html` contains the exact text "Hello Omer" in an `<h1>` and "from Palmidos AI" in a `<p>`, both visible without scrolling at 1280×800 viewport (R-001)
-2. [ ] The greeting is visually centered (vertically and horizontally) at 1280×800 desktop and 375×667 mobile; no scrollbar appears (R-002)
-3. [ ] CSS `@keyframes greetingIn` animation is defined in `style.css`; the `.greeting--animate` class applies it with a 200ms delay and 700ms duration; animation completes within 1.5s of page load (R-003)
-4. [ ] `@media (prefers-reduced-motion: reduce)` block in `style.css` sets `animation: none; opacity: 1; transform: translateY(0)` on `.greeting--animate` — text appears instantly when reduced-motion is enabled (R-003)
-5. [ ] Page renders without horizontal overflow or text clipping at 375px, 768px, and 1280px viewports; `clamp()` typography used for both greeting lines (R-004)
-6. [ ] `curl -I https://omer-landing-palmidos.vercel.app` returns HTTP 200; response body contains "Hello Omer" (R-005)
-7. [ ] "Hello Omer" (`#f0ede6` on `#0f0e0c`) meets WCAG AA contrast ≥ 4.5:1 (actual: 16.2:1); "from Palmidos AI" (`#c9a96e` on `#0f0e0c`) meets WCAG AA contrast ≥ 4.5:1 (actual: 7.1:1) (R-006)
-8. [ ] `<title>Hello Omer</title>` is present in rendered HTML (R-007)
-9. [ ] `favicon.svg` and `favicon.ico` are committed; both referenced in `<head>` via `<link rel="icon">`; `curl -I https://omer-landing-palmidos.vercel.app/favicon.ico` returns HTTP 200 (R-008)
-10. [ ] Background radial-gradient amber halo is present in `style.css` on `body` (R-009)
-11. [ ] `<h1>` and `<p>` are visually differentiated: `<h1>` uses `--color-primary` (`#f0ede6`) and large fluid size; `<p>` uses `--color-accent` (`#c9a96e`) and smaller fluid size (R-010)
-12. [ ] `vercel.json` does not contain `"framework": "nextjs"` (prevents Vercel build failure on plain HTML)
-13. [ ] `min-height: 100dvh` is used (not `100vh`) in `style.css` for iOS Safari address bar compatibility (R-002, R-004)
-14. [ ] `<html lang="en">` and `<meta name="viewport" content="width=device-width, initial-scale=1">` present (accessibility baseline)
-15. [ ] No JavaScript files exist in the repo root; page renders fully without JS execution
-
-### Estimated Complexity
-
-**Complexity:** M
-
----
-
-## Stage 2: Lighthouse CI
-
-**Objective:** Add GitHub Actions Lighthouse CI that automatically audits Performance ≥ 95 and Accessibility ≥ 95 on every push to `main`.
-
-**Implements:** R-005 (deployment gate), Success Metrics (LCP < 1.5s, Lighthouse Performance ≥ 95, Accessibility ≥ 95)
-
-**Prerequisites:** Stage 1 complete and merged — Vercel deployment live at `https://omer-landing-palmidos.vercel.app`
-
-**Architecture:**
-Per the architecture spec, CI uses `@lhci/cli ^0.14` in GitHub Actions. Since this is a plain static site with no `npm install` or build step, the CI workflow is **Lighthouse-only** — it skips `npm ci`, `next build`, and DB steps. The workflow runs `lhci autorun` against the **production Vercel URL** (`https://omer-landing-palmidos.vercel.app`) since there is no preview deployment step in the workflow (no framework, no PR deploy hook needed for this minimal site). Reference: `/home/openclaw/.openclaw/company/templates/github-actions-ci-nextjs.yml` — adapt by removing Node.js install, npm ci, DB guard, and build steps; keep only `lhci autorun`.
-
-**Design:** No UI changes. This stage is infrastructure only.
-
-**Product Note:**
-Per the success metrics in the PRD, Lighthouse Performance ≥ 95 and Accessibility ≥ 95 are hard gates. `lighthouserc.json` must define these assertions. The LCP threshold of 1.5s is implicit in the Performance score gate (a 1.5s LCP on a CSS-only page will easily exceed 95).
-
-**Test strategy:** strict
-
-*Justification: CI configuration is the acceptance criterion itself — the workflow must pass on the live deployment. This is a functional correctness check, not a visual one.*
-
-### Files to Create/Modify
-
-| File Path | Action (create/modify) | Purpose |
-|-----------|----------------------|---------|
-| `.github/workflows/ci.yml` | create | GitHub Actions workflow: install `@lhci/cli`, run `lhci autorun` against `https://omer-landing-palmidos.vercel.app` on push to `main` and on PRs |
-| `lighthouserc.json` | create | Lighthouse CI config: assert `performance >= 0.95`, `accessibility >= 0.95`; set `url` to `https://omer-landing-palmidos.vercel.app` |
-
-### Acceptance Criteria — Stage 2
-
-1. [ ] `.github/workflows/ci.yml` exists and is syntactically valid YAML; workflow triggers on `push` to `main` and on `pull_request` (Success Metrics)
-2. [ ] Workflow installs `@lhci/cli` via `npm install -g @lhci/cli` (no `package.json` needed — global install in CI only)
-3. [ ] `lighthouserc.json` defines `assertions.categories:performance >= 0.95` and `assertions.categories:accessibility >= 0.95` (Success Metrics)
-4. [ ] `lighthouserc.json` sets the URL to `https://omer-landing-palmidos.vercel.app`
-5. [ ] GitHub Actions run on a push to `main` completes without error; Lighthouse Performance score ≥ 95 and Accessibility score ≥ 95 are both reported as PASS in CI logs (R-005, Success Metrics)
-6. [ ] CI workflow does NOT include `npm ci`, `next build`, `DATABASE_URL`, or any DB-related steps (plain static site — no Node.js deps to install)
-7. [ ] No `node_modules`, `.env`, or credential files are committed to the repo (security baseline)
+1. [ ] `index.html` exists at repo root and contains the exact text "Hello Omer" and "from Palmidos AI" in the DOM (R-001)
+2. [ ] "Hello Omer" is wrapped in an `<h1>` element with class `greeting__main`; "from Palmidos AI" is in a `<p>` element with class `greeting__sub` (R-001)
+3. [ ] `<title>` element contains exactly "Hello Omer" (R-007)
+4. [ ] `<html>` has `lang="en"`; `<meta charset="utf-8">` and `<meta name="viewport" content="width=device-width, initial-scale=1">` are present (R-004)
+5. [ ] `<link rel="icon" href="favicon.svg" type="image/svg+xml">` and `<link rel="icon" href="favicon.ico" sizes="any">` are present in `<head>`; `favicon.svg` file exists at repo root (R-008)
+6. [ ] `style.css` defines `body` with `display: flex; align-items: center; justify-content: center; min-height: 100dvh` — greeting is vertically and horizontally centered at all viewport widths (R-002)
+7. [ ] `@keyframes greetingIn` animates opacity 0→1 and translateY 20px→0; `.greeting--animate` applies it with 700ms duration, 200ms delay, `cubic-bezier(0.16, 1, 0.3, 1)` easing, and `fill-mode: both`; total animation completes by 900ms (R-003)
+8. [ ] `@media (prefers-reduced-motion: reduce)` sets `.greeting--animate { animation: none; opacity: 1; transform: translateY(0); }` (R-003 error state)
+9. [ ] `--color-primary: #f0ede6` used for `.greeting__main` text; `--color-accent: #c9a96e` used for `.greeting__sub` text — both colors produce WCAG AAA contrast on `#0f0e0c` background (R-006, R-010)
+10. [ ] `.greeting__main` uses `font-size: var(--size-main)` = `clamp(2.8rem, 8vw, 5.5rem)` (R-004); `.greeting__sub` uses `font-size: var(--size-sub)` = `clamp(1rem, 2.8vw, 1.75rem)` (R-004)
+11. [ ] Background uses `background-color: var(--color-bg)` and `background-image: radial-gradient(ellipse 60% 40% at 50% 50%, var(--color-glow) 0%, transparent 70%)` (R-009)
+12. [ ] No horizontal scrollbar at 375px viewport width; greeting text does not clip or overflow (R-004)
+13. [ ] `vercel.json` does not contain `"framework": "nextjs"` — Vercel can deploy the repo as a static site without a build error (R-005)
+14. [ ] Opening `index.html` in a browser (or via `npx serve .`) shows the greeting centered on screen with the animation playing on load (R-003, R-005)
+15. [ ] No JavaScript files exist in the repo; no `<script>` tags in `index.html`; no npm packages installed (PRD non-goal)
+16. [ ] No `.env` file committed; no database connection strings in any file (PRD hard constraint)
 
 ### Estimated Complexity
 
@@ -180,10 +134,48 @@ Per the success metrics in the PRD, Lighthouse Performance ≥ 95 and Accessibil
 
 ---
 
-## Stage Count Justification
+## Stage 2: Lighthouse CI
 
-This project is **Small tier** (max 3 stages). Two stages are used:
-- **Stage 1** is the single functional deliverable (all HTML/CSS per PRD + architecture).
-- **Stage 2** is CI/Lighthouse gating, which cannot be tested until Stage 1 is deployed. Keeping CI separate avoids blocking the working page on CI config, and ensures the Lighthouse audit runs against real deployed output.
+**Objective:** Add a GitHub Actions workflow that runs Lighthouse CI against the live Vercel deployment on every push to `main`, gating on Performance ≥ 95 and Accessibility ≥ 95.
 
-Collapsing both into one stage would mean CI is tested before Vercel deployment is proven, creating a chicken-and-egg problem. Two stages is the correct and minimal split.
+**Implements:** R-005, R-006 (Success Metrics: Lighthouse Performance ≥ 95, Accessibility ≥ 95, LCP < 1.5s)
+
+**Prerequisites:** Stage 1 complete and deployed to `https://omer-landing-palmidos.vercel.app`
+
+**Architecture context:**
+- CI tool: `@lhci/cli` v^0.14 (dev-only, installed in workflow — not shipped to users)
+- Workflow file: `.github/workflows/ci.yml`
+- Target URL: `https://omer-landing-palmidos.vercel.app` (hardcoded — no `VERCEL_URL` env var needed since the URL is stable and pre-provisioned)
+- No `npm ci` or build step — Vercel deploys automatically on push; Lighthouse runs against the already-live URL
+- Reference template: `/home/openclaw/.openclaw/company/templates/github-actions-ci-nextjs.yml` — adapt for static (skip build steps, only run Lighthouse audit)
+- Assertions: `performance >= 0.95`, `accessibility >= 0.95`
+- `lhci` config: inline in workflow or via `.lighthouserc.json` at repo root
+
+**Product context:**
+- User Flow 3 (CI Bot) requires Lighthouse to gate on Performance ≥ 95 and Accessibility ≥ 95 on each push
+- LCP < 1.5s is a success metric — Lighthouse reports LCP; CI should log it
+- No `DATABASE_URL` secret required (no database in this project)
+
+**Test strategy:** strict
+> CI configuration is infrastructure-as-code with binary pass/fail behavior. Acceptance criteria are verified by observing the workflow run green on GitHub Actions.
+
+### Files to Create/Modify
+
+| File Path | Action (create/modify) | Purpose |
+|-----------|----------------------|---------|
+| `.github/workflows/ci.yml` | create | GitHub Actions workflow — installs `@lhci/cli`, runs Lighthouse against Vercel URL, asserts Performance ≥ 95 and Accessibility ≥ 95 |
+| `.lighthouserc.json` | create | Lighthouse CI config — target URL, assertion thresholds, output settings |
+
+### Acceptance Criteria — Stage 2
+
+1. [ ] `.github/workflows/ci.yml` exists and triggers on `push` to `main` and on `pull_request` (R-005 CI gate)
+2. [ ] Workflow installs `@lhci/cli@^0.14` and runs `lhci autorun` against `https://omer-landing-palmidos.vercel.app`
+3. [ ] `.lighthouserc.json` asserts `"performance": ["error", {"minScore": 0.95}]` and `"accessibility": ["error", {"minScore": 0.95}]`
+4. [ ] Workflow completes green (exit 0) when pushed to `main` — visible in GitHub Actions tab for `tegridy-farms/omer-landing`
+5. [ ] If Lighthouse Performance drops below 0.95 or Accessibility below 0.95, the workflow exits non-zero (CI fails)
+6. [ ] No `npm ci` or `next build` steps in the workflow — it is a pure Lighthouse audit, no build required (R-005, architecture constraint)
+7. [ ] No secrets or credentials are hardcoded in `ci.yml` or `.lighthouserc.json` (PRD hard constraint)
+
+### Estimated Complexity
+
+**Complexity:** S

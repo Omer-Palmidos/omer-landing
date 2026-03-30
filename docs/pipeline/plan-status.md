@@ -8,18 +8,18 @@
 
 ---
 
-## Stage Tracker
+## Summary Table
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Functional Landing Page | IN_PROGRESS | `stage-1-landing-page` | Assigned to Kenny |
-| 2 | Lighthouse CI | PENDING | — | Starts after Stage 1 merge |
+| 1 | Complete Static Page | IN_PROGRESS | `stage-1-static-page` | Assigned to Kenny |
+| 2 | Lighthouse CI | PENDING | — | Pending Stage 1 merge |
 
 ---
 
-## Stage 1: Functional Landing Page
+## Stage 1: Complete Static Page
 
-**Objective:** Build and deploy the complete, polished "Hello Omer" landing page — markup, styling, animations, favicon, responsive design — as a fully working static site on Vercel.
+**Objective:** Build and deploy the full personalized landing page — centered greeting, entrance animation, responsive design, favicon, and Vercel static config — as a single working deliverable.
 
 **Status:** IN_PROGRESS
 
@@ -27,25 +27,25 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Stage created. Handed off to Kenny for implementation. |
+| 2026-03-30 | Stage 1 handed off to Kenny. Branch: `stage-1-static-page`. Implements R-001 through R-010. Plain HTML+CSS, no build tooling. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Pending — assigned to Butters after dev completes. |
+| —          | Pending dev completion. Butters to QA when Kenny marks done. |
 
 ### Merge notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending merge after QA passes. |
+| —          | Pending QA sign-off. |
 
 ---
 
 ## Stage 2: Lighthouse CI
 
-**Objective:** Add GitHub Actions Lighthouse CI that automatically audits Performance ≥ 95 and Accessibility ≥ 95 on every push to `main`.
+**Objective:** Add a GitHub Actions workflow that runs Lighthouse CI against the live Vercel deployment on every push to `main`, gating on Performance ≥ 95 and Accessibility ≥ 95.
 
 **Status:** PENDING
 
@@ -53,16 +53,16 @@
 
 | Date       | Note |
 |------------|------|
-| —          | Starts after Stage 1 is merged and Vercel deployment is live. |
+| —          | Pending Stage 1 merge. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending. |
+| —          | Pending Stage 1 merge. |
 
 ### Merge notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending. |
+| —          | Pending Stage 1 merge. |
