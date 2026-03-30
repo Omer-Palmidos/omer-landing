@@ -12,8 +12,8 @@
 
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
-| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged 2026-03-30 — PR #1 |
-| 2 | Lighthouse CI | IN_PROGRESS | `stage-2-lighthouse-ci` | Assigned to Kenny |
+| 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
+| 2 | Lighthouse CI | IN_PROGRESS | — | Stage 1 merged; ready for dev. |
 
 ---
 
@@ -40,7 +40,7 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | PR #1 merged via squash. `git pull` on `main` confirms fast-forward. Files merged: `index.html`, `style.css`, `favicon.svg`, `vercel.json`, `README.md`, `docs/qa/stage-1-review.md`. |
+| 2026-03-30 | PR #1 merged to main (already merged at handoff). `git pull --rebase origin main` confirmed up to date. |
 
 ---
 
@@ -54,13 +54,13 @@
 
 | Date       | Note |
 |------------|------|
-| 2026-03-30 | Stage created. Handed off to Kenny. Branch: `stage-2-lighthouse-ci`. |
+| 2026-03-30 | Stage 2 handed off to Kenny. Implements R-005, R-006 (Lighthouse thresholds). Prior QA summary: `docs/qa/prior-qa-summary-S2.md`. |
 
 ### QA notes
 
 | Date       | Note |
 |------------|------|
-| —          | Pending. Assigned to Butters after dev completes. |
+| —          | Pending dev completion. |
 
 ### Merge notes
 
