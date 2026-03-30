@@ -21,13 +21,14 @@
 
 **Objective:** Build and deploy the full personalized landing page — centered greeting, entrance animation, responsive design, favicon, and Vercel static config — as a single working deliverable.
 
-**Status:** IN_PROGRESS
+**Status:** DONE
 
 ### Development notes
 
 | Date       | Note |
 |------------|------|
 | 2026-03-30 | Stage 1 handed off to Kenny. Branch: `stage-1-static-page`. Implements R-001 through R-010. Plain HTML+CSS, no build tooling. |
+| 2026-03-30 | Kenny completed stage 1. PR: https://github.com/Omer-Palmidos/omer-landing/pull/1. All 16 AC verified. |
 
 ### QA notes
 
