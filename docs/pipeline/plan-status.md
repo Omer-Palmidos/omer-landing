@@ -13,7 +13,7 @@
 | Stage | Title | Status | Branch | Notes |
 |-------|-------|--------|--------|-------|
 | 1 | Complete Static Page | DONE | `stage-1-static-page` | Merged to main. PR #1. |
-| 2 | Lighthouse CI | IN_PROGRESS | — | Stage 1 merged; ready for dev. |
+| 2 | Lighthouse CI | DONE | `stage-2-lighthouse-ci` | PR #2 open. All 7 AC verified. |
 
 ---
 
@@ -55,6 +55,7 @@
 | Date       | Note |
 |------------|------|
 | 2026-03-30 | Stage 2 handed off to Kenny. Implements R-005, R-006 (Lighthouse thresholds). Prior QA summary: `docs/qa/prior-qa-summary-S2.md`. |
+| 2026-03-30 | Kenny completed stage 2. PR: https://github.com/Omer-Palmidos/omer-landing/pull/2. All 7 AC verified. |
 
 ### QA notes
 
